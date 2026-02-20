@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>研究報告：賴奇特 (Subject L) 的醫療力場異常分析</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* Typography */
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+
+        /* Palette: "Clinical Urgency" (Vibrant Teal, Alert Red, Sterile White) */
+        :root {
+            --medical-teal: #00bfa5;
+            --alert-red: #ff1744;
+            --sterile-white: #ffffff;
+            --dark-scrub: #263238;
+            --warning-amber: #ffca28;
+        }
+
+        /* Chart Container Strict Styling */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px; /* Max width constraint */
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px; /* Base height */
+            max-height: 400px; /* Max height constraint */
+            background-color: var(--sterile-white);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            overflow: hidden; /* Prevent overflow */
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+
+        /* Utility: "Confidential" Stamp Style */
+        .stamp {
+            transform: rotate(-15deg);
+            border: 4px solid var(--alert-red);
+            color: var(--alert-red);
+            font-weight: 900;
+            padding: 0.5rem 1rem;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.8;
+        }
+    </style>
+    <!-- 
+        NARRATIVE PLAN:
+        1. Executive Summary: Define the "Detective Conan Effect" (Medical Variant).
+        2. Incident Timeline: 2012, 2013, 2015, 2016 (Added), 2022 (Added).
+        3. Statistical Diagnostics (Charts):
+           - Chart 1 (Donut): Distribution of emergency types.
+           - Chart 2 (Bar): Comparing Subject L's encounter rate vs. Average Physician.
+           - Chart 3 (Plotly Scatter): Correlation between Election Cycles and Medical Miracles.
+           - Chart 4 (Radar): The "Politician-Doctor" Hybrid Skillset.
+        4. Conclusion: Is it fate or a simulation?
+
+        CHART CHOICES (NO SVG):
+        - Timeline: HTML/Tailwind vertical flex.
+        - Charts: Canvas-based Chart.js and Plotly.js.
+    -->
+</head>
+<body class="antialiased">
+
+    <!-- Header / File Cover -->
+    <header class="bg-slate-900 text-white border-b-8 border-[#00bfa5] py-12 px-4 relative overflow-hidden">
+        <div class="absolute top-4 right-4 stamp text-sm md:text-xl border-red-500 text-red-500">
+            極機密 | TOP SECRET
+        </div>
+        <div class="max-w-6xl mx-auto text-center z-10 relative">
+            <h1 class="text-4xl md:text-6xl font-black mb-2 tracking-tight">
+                <span class="text-[#00bfa5]">賴奇特</span>醫療力場異常報告
+            </h1>
+            <h2 class="text-xl md:text-2xl font-light text-gray-400 mb-6">
+                Case Study: Subject L 的「柯南式」隨機救人現象
+            </h2>
+            <p class="max-w-3xl mx-auto text-gray-300 text-sm md:text-base leading-relaxed bg-slate-800 p-4 rounded-lg border-l-4 border-[#ff1744]">
+                <strong>摘要：</strong> 本研究旨在探討台灣政壇奇觀——為何賴清德（以下簡稱 Subject L）在公共場合遭遇「突發醫療需求」的機率，高出一般內科醫師 500%？這究竟是仁醫的磁場吸引，還是宇宙為了讓他施展 CPR 而精心編寫的劇本？
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto p-4 md:p-8 space-y-16">
+
+        <!-- Section 1: Clinical History (Timeline) -->
+        <section>
+            <div class="mb-8 text-center md:text-left">
+                <h3 class="text-3xl font-bold text-gray-800 flex items-center justify-center md:justify-start gap-3">
+                    <span class="bg-[#00bfa5] text-white w-8 h-8 rounded flex items-center justify-center text-lg">1</span>
+                    病史追蹤 (Clinical History)
+                </h3>
+                <p class="text-gray-600 mt-2">
+                    Subject L 的發病（救人）紀錄呈現高度規律性，且病情（事件嚴重度）隨職位提升而呈現多樣化。
+                </p>
+            </div>
+
+            <!-- Vertical Timeline (Tailwind Only - No SVG) -->
+            <div class="relative max-w-4xl mx-auto">
+                <!-- Center Line -->
+                <div class="absolute left-4 md:left-1/2 h-full w-1 bg-gray-300 transform md:-translate-x-1/2 z-0"></div>
+
+                <!-- 2012 Event -->
+                <div class="relative z-10 flex flex-col md:flex-row items-center mb-12">
+                    <div class="flex-1 md:text-right md:pr-8 pl-12 md:pl-0">
+                        <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-[#00bfa5]">
+                            <h4 class="font-bold text-xl text-[#00bfa5]">2012：高鐵急診室</h4>
+                            <span class="text-xs font-bold text-white bg-gray-800 px-2 py-1 rounded">起始點 Patient Zero</span>
+                            <p class="text-gray-600 mt-2 text-sm">
+                                <strong>地點：</strong> 高鐵車廂<br>
+                                <strong>處置：</strong> 聽到廣播尋醫，立即前往協助身體不適乘客。<br>
+                                <strong>點評：</strong> 「賴神」傳說的開端。從此搭高鐵不敢睡覺，怕錯過廣播。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="absolute left-0 md:left-1/2 w-8 h-8 bg-[#00bfa5] rounded-full border-4 border-white transform md:-translate-x-1/2 flex items-center justify-center text-xs font-bold text-white">12</div>
+                    <div class="flex-1 hidden md:block"></div>
+                </div>
+
+                <!-- 2013 Event -->
+                <div class="relative z-10 flex flex-col md:flex-row items-center mb-12">
+                    <div class="flex-1 hidden md:block"></div>
+                    <div class="absolute left-0 md:left-1/2 w-8 h-8 bg-[#263238] rounded-full border-4 border-white transform md:-translate-x-1/2 flex items-center justify-center text-xs font-bold text-white">13</div>
+                    <div class="flex-1 md:pl-8 pl-12 md:pl-0">
+                        <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-[#263238]">
+                            <h4 class="font-bold text-xl text-[#263238]">2013：高空巡診</h4>
+                            <span class="text-xs font-bold text-white bg-gray-800 px-2 py-1 rounded">高度 30,000 英呎</span>
+                            <p class="text-gray-600 mt-2 text-sm">
+                                <strong>地點：</strong> 波音747<br>
+                                <strong>處置：</strong> 協助機上不適的沈姓台商。<br>
+                                <strong>點評：</strong> 醫療服務範圍突破大氣層。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2015 Event -->
+                <div class="relative z-10 flex flex-col md:flex-row items-center mb-12">
+                    <div class="flex-1 md:text-right md:pr-8 pl-12 md:pl-0">
+                        <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-[#ffca28]">
+                            <h4 class="font-bold text-xl text-[#ffca28]">2015：學甲車禍分流</h4>
+                            <span class="text-xs font-bold text-white bg-gray-800 px-2 py-1 rounded">外傷急救 Trauma</span>
+                            <p class="text-gray-600 mt-2 text-sm">
+                                <strong>地點：</strong> 台南麻豆/學甲路段<br>
+                                <strong>處置：</strong> 目擊車禍，下車指揮交通並評估傷者。<br>
+                                <strong>點評：</strong> 隨扈表示：老闆，我們趕行程啊...
+                            </p>
+                        </div>
+                    </div>
+                    <div class="absolute left-0 md:left-1/2 w-8 h-8 bg-[#ffca28] rounded-full border-4 border-white transform md:-translate-x-1/2 flex items-center justify-center text-xs font-bold text-white">15</div>
+                    <div class="flex-1 hidden md:block"></div>
+                </div>
+
+                <!-- 2016 Event (New) -->
+                <div class="relative z-10 flex flex-col md:flex-row items-center mb-12">
+                    <div class="flex-1 hidden md:block"></div>
+                    <div class="absolute left-0 md:left-1/2 w-8 h-8 bg-[#ff1744] rounded-full border-4 border-white transform md:-translate-x-1/2 flex items-center justify-center text-xs font-bold text-white">16</div>
+                    <div class="flex-1 md:pl-8 pl-12 md:pl-0">
+                        <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-[#ff1744]">
+                            <h4 class="font-bold text-xl text-[#ff1744]">2016：災區行軍 (破鞋事件)</h4>
+                            <span class="text-xs font-bold text-white bg-gray-800 px-2 py-1 rounded">大型災難 Disaster</span>
+                            <p class="text-gray-600 mt-2 text-sm">
+                                <strong>地點：</strong> 台南大地震維冠大樓<br>
+                                <strong>處置：</strong> 雖主要為指揮調度，但其「不眠不休走到鞋底脫落」的形象，被視為一種精神上的集體治療。<br>
+                                <strong>點評：</strong> 雖然沒有直接插管，但這是「賴神」神格化的最高峰。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2022 Event (New) -->
+                <div class="relative z-10 flex flex-col md:flex-row items-center mb-12">
+                    <div class="flex-1 md:text-right md:pr-8 pl-12 md:pl-0">
+                        <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-[#00bfa5]">
+                            <h4 class="font-bold text-xl text-[#00bfa5]">2022：造勢場急診</h4>
+                            <span class="text-xs font-bold text-white bg-gray-800 px-2 py-1 rounded">復發 Recurrence</span>
+                            <p class="text-gray-600 mt-2 text-sm">
+                                <strong>地點：</strong> 競選造勢晚會<br>
+                                <strong>處置：</strong> 台下民眾暈倒，Subject L 從台上跳下進行初步檢傷。<br>
+                                <strong>點評：</strong> 證明了即使當到副總統，只要有人暈倒，身體就會自動反應。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="absolute left-0 md:left-1/2 w-8 h-8 bg-[#00bfa5] rounded-full border-4 border-white transform md:-translate-x-1/2 flex items-center justify-center text-xs font-bold text-white">22</div>
+                    <div class="flex-1 hidden md:block"></div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Section 2: Data Diagnostics (Charts) -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- Chart 1: Case Mix -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="font-bold text-lg text-gray-800 mb-4 border-b-2 border-gray-100 pb-2">
+                    診斷分類 (Case Mix)
+                </h3>
+                <p class="text-sm text-gray-500 mb-4">
+                    分析 Subject L 介入的醫療事件類型。數據顯示「暈厥/身體不適」為主要誘發因子。
+                </p>
+                <div class="chart-container">
+                    <canvas id="chartType"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 2: Comparative Probability -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="font-bold text-lg text-gray-800 mb-4 border-b-2 border-gray-100 pb-2">
+                    遇險機率比較 (Encounter Rate)
+                </h3>
+                <p class="text-sm text-gray-500 mb-4">
+                    對比「賴清德」與「一般執業醫師」在非執業時間遇到急救案件的年均次數。
+                </p>
+                <div class="chart-container">
+                    <canvas id="chartComparison"></canvas>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Section 3: Advanced Analysis (Plotly & Radar) -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- Chart 3: Election Cycle Correlation (Plotly) -->
+            <div class="bg-white p-6 rounded-lg shadow-md md:col-span-2">
+                <h3 class="font-bold text-lg text-gray-800 mb-4 border-b-2 border-gray-100 pb-2">
+                    選舉週期與醫療奇蹟相關性分析 (3D Scatter)
+                </h3>
+                <p class="text-sm text-gray-500 mb-4">
+                    此圖表探討「距離選舉的月份數 (X)」與「事件媒體效應 (Y)」之間的關係。氣泡大小代表事件的戲劇張力。是否越接近選舉，發生的事件越具戲劇性？
+                </p>
+                <!-- Full width container for Plotly -->
+                <div id="plotlyCorrelation" class="w-full h-96 bg-gray-50 rounded"></div>
+            </div>
+
+            <!-- Chart 4: Skill Matrix -->
+            <div class="bg-white p-6 rounded-lg shadow-md mx-auto w-full">
+                <h3 class="font-bold text-lg text-gray-800 mb-4 border-b-2 border-gray-100 pb-2">
+                    政治人物-醫師 混合技能樹
+                </h3>
+                <p class="text-sm text-gray-500 mb-4">
+                    評估 Subject L 在政治與醫療技能上的融合程度。
+                </p>
+                <div class="chart-container">
+                    <canvas id="chartRadar"></canvas>
+                </div>
+            </div>
+
+            <!-- Summary Text Block -->
+            <div class="bg-[#263238] p-8 rounded-lg shadow-md text-white flex flex-col justify-center relative overflow-hidden">
+                <div class="absolute -right-4 -top-4 text-8xl opacity-10 font-black">?</div>
+                <h3 class="text-2xl font-bold text-[#00bfa5] mb-4">綜合診斷結論</h3>
+                <p class="mb-4 leading-relaxed text-gray-300">
+                    根據上述數據分析，我們排除「巧合」的可能性。Subject L 顯然攜帶了一種特殊的<strong>「高機率觸發型醫療力場」</strong>。
+                </p>
+                <ul class="list-disc pl-5 space-y-2 text-gray-300">
+                    <li>
+                        <strong class="text-white">正面效應：</strong> 提升了大眾對 CPR 與 AED 的關注度。
+                    </li>
+                    <li>
+                        <strong class="text-white">副作用：</strong> 隨扈的工作壓力極大，需隨時準備指揮交通或拿急救箱。
+                    </li>
+                    <li>
+                        <strong class="text-white">建議：</strong> 建議健保署將 Subject L 列為「移動式急救站」，並在其行程表上標註「高風險區域」。
+                    </li>
+                </ul>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-200 text-center py-8 mt-12 border-t border-gray-300">
+        <p class="text-gray-500 text-sm">
+            © 2026 政治醫學研究中心 | 資料來源：公開新聞報導、網路鄉民百科 | <span class="text-[#ff1744]">本報告純屬黑色幽默，請勿過度認真</span>
+        </p>
+    </footer>
+
+    <script>
+        // --- 1. Utility: Label Wrapping (16 char limit) ---
+        function wrapLabel(label) {
+            const limit = 16;
+            if (label.length <= limit) return label;
+            
+            // For mixed content, simple length split is safest for visualization
+            let result = [];
+            let currentLine = '';
+            for (let i = 0; i < label.length; i++) {
+                currentLine += label[i];
+                if (currentLine.length >= limit) {
+                    result.push(currentLine);
+                    currentLine = '';
+                }
+            }
+            if (currentLine.length > 0) result.push(currentLine);
+            return result;
+        }
+
+        // --- 2. Shared Tooltip Configuration (Mandatory) ---
+        const commonTooltipConfig = {
+            callbacks: {
+                title: function(tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    if (Array.isArray(label)) {
+                        return label.join(' ');
+                    } else {
+                        return label;
+                    }
+                }
+            }
+        };
+
+        // --- 3. Chart 1: Case Mix (Donut) ---
+        const ctxType = document.getElementById('chartType').getContext('2d');
+        new Chart(ctxType, {
+            type: 'doughnut',
+            data: {
+                labels: ['暈厥/內科急症 (Fainting)', '交通意外 (Trauma)', '災難指揮 (Disaster)', '其他 (Other)'],
+                datasets: [{
+                    data: [50, 25, 15, 10], // Estimated proportions
+                    backgroundColor: [
+                        '#00bfa5', // Teal
+                        '#ffca28', // Amber
+                        '#ff1744', // Red
+                        '#263238'  // Dark
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: commonTooltipConfig
+                }
+            }
+        });
+
+        // --- 4. Chart 2: Probability Comparison (Bar) ---
+        const ctxComp = document.getElementById('chartComparison').getContext('2d');
+        const compLabels = ['一般內科醫師 (Avg Doc)', '柯南 (Det. Conan)', '賴清德 (Subject L)'];
+        const processedCompLabels = compLabels.map(l => wrapLabel(l));
+
+        new Chart(ctxComp, {
+            type: 'bar',
+            data: {
+                labels: processedCompLabels,
+                datasets: [{
+                    label: '非執業期間遇險指數 (Index)',
+                    data: [1, 500, 450], // Hyperbolic data for humor
+                    backgroundColor: ['#b0bec5', '#263238', '#ff1744'],
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: commonTooltipConfig
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // --- 5. Chart 3: Plotly Scatter (Timeline vs Election) ---
+        // X: Year, Y: Media Impact (1-100), Z/Color: Proximity to Election (Months)
+        // Note: Plotly needs the container ID
+        const trace1 = {
+            x: [2012, 2013, 2015, 2016, 2022],
+            y: [80, 75, 85, 95, 88], // Media Impact
+            mode: 'markers+text',
+            text: ['高鐵救人', '機上救援', '學甲車禍', '破鞋救災', '造勢暈倒'],
+            textposition: 'top center',
+            marker: {
+                size: [20, 25, 30, 40, 35], // Bubble size correlated to impact
+                color: [24, 18, 12, 1, 1], // Months to nearest election (approximated for effect)
+                colorscale: 'Portland',
+                showscale: true,
+                colorbar: {
+                    title: '距選舉月數',
+                    titleside: 'right'
+                }
+            },
+            type: 'scatter'
+        };
+
+        const layout = {
+            title: { text: '年度 vs. 媒體效應 (氣泡顏色=距選舉月數)' },
+            xaxis: { title: '年份 (Year)', dtick: 2 },
+            yaxis: { title: '媒體效應指數 (Media Hype)', range: [60, 110] },
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { family: 'Noto Sans TC' },
+            margin: { t: 40, l: 40, r: 40, b: 40 }
+        };
+        
+        // Render Plotly (Canvas/SVG hybrid, no strictly SVG-only types used)
+        Plotly.newPlot('plotlyCorrelation', [trace1], layout, {responsive: true, displayModeBar: false});
+
+        // --- 6. Chart 4: Radar Skill Matrix ---
+        const ctxRadar = document.getElementById('chartRadar').getContext('2d');
+        const radarLabels = ['醫療專業 (Medicine)', '鏡頭意識 (Camera)', '危機處理 (Crisis)', '運氣 (Luck)', '體能 (Stamina)'];
+        
+        new Chart(ctxRadar, {
+            type: 'radar',
+            data: {
+                labels: radarLabels,
+                datasets: [{
+                    label: 'Subject L 綜合能力值',
+                    data: [85, 99, 90, 95, 88],
+                    fill: true,
+                    backgroundColor: 'rgba(0, 191, 165, 0.2)', // Teal transparent
+                    borderColor: '#00bfa5',
+                    pointBackgroundColor: '#00bfa5',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#00bfa5'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: commonTooltipConfig
+                },
+                scales: {
+                    r: {
+                        angleLines: { color: '#e0e0e0' },
+                        grid: { color: '#e0e0e0' },
+                        suggestedMin: 0,
+                        suggestedMax: 100,
+                        ticks: { backdropColor: 'transparent' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
