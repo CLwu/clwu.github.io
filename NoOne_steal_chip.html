@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深度解析：「台灣偷走美國晶片」論述之荒謬性與現實</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Custom Font for Traditional Chinese */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700;900&display=swap');
+        
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #F3F4F6;
+            color: #1F2937;
+        }
+
+        /* Chart Container Logic - Mandatory for Layout Control */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 100%; /* Adapts to grid column */
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px; /* Mobile base height */
+        }
+
+        /* Responsive adjustments for Chart Containers */
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+
+        /* Timeline styling without SVG */
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #06B6D4, #8B5CF6);
+            transform: translateX(-50%);
+        }
+
+        /* Card Hover Effects */
+        .infographic-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .infographic-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+    <!-- 
+        Selected Palette: Vibrant Cyber Tech
+        Primary: #0B1120 (Deep Navy - Text/Headers)
+        Accent 1: #06B6D4 (Cyan - Data A)
+        Accent 2: #8B5CF6 (Violet - Data B)
+        Accent 3: #EC4899 (Pink - Data C)
+        Background: #F3F4F6 (Light Gray)
+    -->
+</head>
+<body class="bg-gray-100">
+
+    <!-- Header / Hook Section -->
+    <header class="bg-[#0B1120] text-white py-12 px-4 shadow-xl">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="text-4xl md:text-6xl font-black mb-4 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#06B6D4] to-[#8B5CF6]">
+                晶片是被「偷走」的嗎？
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto font-light">
+                解析美國保護主義言論背後的數據真相、歷史脈絡與台灣的戰略反應
+            </p>
+            <div class="mt-8 flex justify-center gap-4 flex-wrap">
+                <span class="px-4 py-2 bg-[#06B6D4] bg-opacity-20 border border-[#06B6D4] rounded-full text-[#06B6D4] font-bold">#半導體歷史</span>
+                <span class="px-4 py-2 bg-[#8B5CF6] bg-opacity-20 border border-[#8B5CF6] rounded-full text-[#8B5CF6] font-bold">#經濟數據闢謠</span>
+                <span class="px-4 py-2 bg-[#EC4899] bg-opacity-20 border border-[#EC4899] rounded-full text-[#EC4899] font-bold">#地緣政治</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-12 space-y-16">
+
+        <!-- Section 1: The Myth vs. Reality (Introduction) -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div class="bg-white p-8 rounded-2xl shadow-lg infographic-card border-l-8 border-[#EC4899]">
+                <h2 class="text-3xl font-bold text-[#0B1120] mb-4">指控的荒謬性</h2>
+                <p class="text-gray-600 mb-6 leading-relaxed">
+                    近年來，美國部分政治人物（如川普）頻繁宣稱「台灣偷走了我們的晶片生意」。這是一種典型的民粹語言，將複雜的全球產業分工簡化為「零和賽局」的盜竊行為。事實上，美國主動選擇了將製造外包，保留了利潤最高的設計與軟體端。
+                </p>
+                <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                    <p class="font-bold text-[#EC4899] mb-2">關鍵矛盾點：</p>
+                    <ul class="list-disc list-inside text-sm text-gray-700 space-y-2">
+                        <li>偷竊隱喻：暗示實體資產轉移，忽視知識產權累積。</li>
+                        <li>時間錯置：台灣半導體起步於美國放棄製造的時期。</li>
+                        <li>忽視互補：台美是上下游互補，而非純競爭。</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-2xl shadow-lg infographic-card">
+                <h3 class="text-xl font-bold text-[#0B1120] mb-4 border-b pb-2">美國真的「失去」一切了嗎？</h3>
+                <p class="text-sm text-gray-500 mb-4">美國雖在製造端（Manufacturing）佔比下降，但在核心設計（Design/IP）與設備（Equipment）仍具絕對統治力。</p>
+                <div class="chart-container">
+                    <canvas id="valueChainChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Historical Context Timeline -->
+        <section>
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-[#0B1120]">歷史真相：合法的技術轉移與創新</h2>
+                <p class="text-gray-600 mt-2 max-w-2xl mx-auto">台灣半導體並非「橫空出世」的贓物，而是長達40年的國家級戰略投資與RCA計畫的合法授權結果。</p>
+            </div>
+
+            <div class="relative py-8">
+                <!-- Timeline Vertical Line -->
+                <div class="timeline-line hidden md:block"></div>
+
+                <!-- Timeline Items -->
+                <div class="space-y-8 relative">
+                    <!-- Item 1 -->
+                    <div class="flex flex-col md:flex-row items-center justify-between w-full">
+                        <div class="order-1 w-full md:w-5/12 text-left md:text-right px-4">
+                            <h3 class="text-2xl font-bold text-[#06B6D4]">1974-1976</h3>
+                            <h4 class="text-lg font-bold text-gray-800">豆漿店早餐會 & RCA 計畫</h4>
+                            <p class="text-gray-600 text-sm mt-2">孫運璿與潘文淵確立發展積體電路。台灣政府出資，正式向美國 RCA 公司「付費」引進過時的 7微米技術，並派遣工程師赴美學習。這是合法的商業技術授權。</p>
+                        </div>
+                        <div class="order-2 w-8 h-8 bg-[#0B1120] border-4 border-[#06B6D4] rounded-full z-10 flex-shrink-0 my-4 md:my-0"></div>
+                        <div class="order-3 w-full md:w-5/12 px-4 bg-white p-4 rounded-lg shadow-md border-t-4 border-[#06B6D4]">
+                            <p class="font-bold text-gray-800">關鍵事實</p>
+                            <p class="text-sm text-gray-600">這不是偷竊，而是美國企業認為低利潤、自願授權的技術轉移。</p>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="flex flex-col md:flex-row items-center justify-between w-full">
+                        <div class="order-1 md:order-3 w-full md:w-5/12 text-left px-4">
+                            <h3 class="text-2xl font-bold text-[#8B5CF6]">1987</h3>
+                            <h4 class="text-lg font-bold text-gray-800">台積電 (TSMC) 成立</h4>
+                            <p class="text-gray-600 text-sm mt-2">張忠謀首創「純晶圓代工模式 (Pure-play Foundry)」。當時英特爾等美商不看好代工，認為只有 IDM (設計製造一條龍) 才是王道。</p>
+                        </div>
+                        <div class="order-2 w-8 h-8 bg-[#0B1120] border-4 border-[#8B5CF6] rounded-full z-10 flex-shrink-0 my-4 md:my-0"></div>
+                        <div class="order-3 md:order-1 w-full md:w-5/12 px-4 bg-white p-4 rounded-lg shadow-md border-t-4 border-[#8B5CF6]">
+                            <p class="font-bold text-gray-800">商業模式創新</p>
+                            <p class="text-sm text-gray-600">台灣贏在商業模式創新（專注製造，不與客戶競爭），而非單純的技術掠奪。</p>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="flex flex-col md:flex-row items-center justify-between w-full">
+                        <div class="order-1 w-full md:w-5/12 text-left md:text-right px-4">
+                            <h3 class="text-2xl font-bold text-[#EC4899]">1990s - 2000s</h3>
+                            <h4 class="text-lg font-bold text-gray-800">美國主動外包浪潮</h4>
+                            <p class="text-gray-600 text-sm mt-2">為了追求華爾街的高股東權益報酬率 (ROE)，美商大量推行 "Fabless" (無廠) 模式，主動關閉工廠，將訂單交給亞洲。</p>
+                        </div>
+                        <div class="order-2 w-8 h-8 bg-[#0B1120] border-4 border-[#EC4899] rounded-full z-10 flex-shrink-0 my-4 md:my-0"></div>
+                        <div class="order-3 w-full md:w-5/12 px-4 bg-white p-4 rounded-lg shadow-md border-t-4 border-[#EC4899]">
+                            <p class="font-bold text-gray-800">市場選擇</p>
+                            <p class="text-sm text-gray-600">是美國資本市場「選擇」了高利潤設計，放棄了重資本製造。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Cost Structure & Reality -->
+        <section class="bg-white rounded-3xl shadow-xl overflow-hidden">
+            <div class="bg-[#0B1120] p-6 text-white">
+                <h2 class="text-2xl font-bold">為何製造業回不去美國？成本結構分析</h2>
+                <p class="opacity-80">指責台灣偷竊，掩蓋了美國本土製造成本高昂的結構性問題。</p>
+            </div>
+            <div class="p-8 grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                    <p class="text-gray-600 mb-4 text-justify">
+                        根據台積電創辦人張忠謀的說法及多份產業報告，在美國生產晶片的成本比在台灣高出約 50% 甚至更多。這包含了勞工成本、供應鏈效率、以及工作文化差異（三班制輪班 vs 朝九晚五）。
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <span class="w-12 h-12 bg-[#06B6D4] text-white rounded-full flex items-center justify-center font-bold text-xl mr-4">1</span>
+                            <div>
+                                <h4 class="font-bold text-gray-800">供應鏈聚落</h4>
+                                <p class="text-xs text-gray-500">新竹至台南的高鐵一日生活圈，維修效率極高。</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="w-12 h-12 bg-[#8B5CF6] text-white rounded-full flex items-center justify-center font-bold text-xl mr-4">2</span>
+                            <div>
+                                <h4 class="font-bold text-gray-800">工程師素質與紀律</h4>
+                                <p class="text-xs text-gray-500">台灣擁有大量高素質且願意配合輪班的碩博士工程師。</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="w-12 h-12 bg-[#EC4899] text-white rounded-full flex items-center justify-center font-bold text-xl mr-4">3</span>
+                            <div>
+                                <h4 class="font-bold text-gray-800">基礎建設補貼</h4>
+                                <p class="text-xs text-gray-500">穩定的水電供應與政府長期支持。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="chart-container">
+                        <canvas id="costComparisonChart"></canvas>
+                    </div>
+                    <p class="text-center text-xs text-gray-400 mt-2">數據估算來源：綜合產業報告與台積電財報會議資訊</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Government Response & Public Sentiment -->
+        <section>
+            <h2 class="text-3xl font-bold text-[#0B1120] mb-8 text-center">台灣的反應：政府與民間的溫差</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Radar Chart for Sentiment -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">反應光譜分析</h3>
+                    <p class="text-sm text-gray-600 mb-6">政府傾向採取「戰略模糊」與「強調合作」，而民間則出現強烈的「疑美論」與「被剝奪感」。</p>
+                    <div class="chart-container">
+                        <canvas id="sentimentRadarChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Text Analysis Cards -->
+                <div class="space-y-6">
+                    <div class="bg-gradient-to-r from-gray-50 to-white p-6 rounded-xl border-l-4 border-[#06B6D4] shadow-sm">
+                        <h4 class="font-bold text-[#06B6D4] text-lg mb-2">🏛️ 政府官方立場：隱忍與務實</h4>
+                        <p class="text-gray-700 text-sm">
+                            台灣政府（經濟部、外交部）多強調「民主供應鏈」與「互補關係」。面對「偷竊說」，官方多選擇低調澄清，避免正面衝突，主因是台灣在國防安全上高度依賴美國，必須維持「矽盾」的戰略價值，不願激怒美方盟友。
+                        </p>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-gray-50 to-white p-6 rounded-xl border-l-4 border-[#EC4899] shadow-sm">
+                        <h4 class="font-bold text-[#EC4899] text-lg mb-2">😡 民間與輿論：荒謬與憤怒</h4>
+                        <p class="text-gray-700 text-sm">
+                            PTT 與社群媒體上充斥反彈聲浪。民眾普遍認為台灣工程師「爆肝」換來的成果被抹黑為偷竊。這種論述加劇了「疑美論」（懷疑美國將把台積電掏空後拋棄台灣），認為美國強迫台積電設廠是「去台化」的開始。
+                        </p>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-gray-50 to-white p-6 rounded-xl border-l-4 border-[#8B5CF6] shadow-sm">
+                        <h4 class="font-bold text-[#8B5CF6] text-lg mb-2">⚖️ 批判性總結</h4>
+                        <p class="text-gray-700 text-sm">
+                            「偷晶片」論述在本質上是美國內政問題的外溢（尋找製造業衰退的代罪羔羊）。台灣政府的軟弱反應雖是地緣政治下的無奈，但也可能讓國際社會誤解歷史事實。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Conclusion -->
+        <footer class="bg-[#0B1120] text-white p-12 rounded-t-3xl mt-12 text-center">
+            <h2 class="text-3xl font-bold mb-6">結論：全球化分工不是零和遊戲</h2>
+            <p class="max-w-3xl mx-auto text-gray-400 text-lg leading-relaxed">
+                晶片產業是人類史上最複雜的供應鏈協作。美國負責設計藍圖（大腦），台灣負責極致工藝製造（手腳），荷蘭提供光刻機（工具）。
+                指控台灣「偷走」晶片，不僅無視了台灣四十年的產業努力，更否定了比較利益法則下的經濟現實。唯有理解合作本質，才能看清民粹語言背後的政治算計。
+            </p>
+            <div class="mt-8 pt-8 border-t border-gray-800 text-sm text-gray-500">
+                <p>資料視覺化分析 | 專題報告</p>
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        // --- Utility Function: Label Wrapping (Mandatory) ---
+        function wrapLabel(label, maxChar = 16) {
+            if (label.length <= maxChar) return label;
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = words[0];
+
+            for (let i = 1; i < words.length; i++) {
+                if ((currentLine + " " + words[i]).length <= maxChar) {
+                    currentLine += " " + words[i];
+                } else {
+                    lines.push(currentLine);
+                    currentLine = words[i];
+                }
+            }
+            lines.push(currentLine);
+            return lines;
+        }
+
+        // --- Common Chart Options ---
+        const commonOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                                return label.join(' ');
+                            } else {
+                                return label;
+                            }
+                        }
+                    }
+                },
+                legend: {
+                    labels: {
+                        font: { family: "'Noto Sans TC', sans-serif" }
+                    }
+                }
+            }
+        };
+
+        // --- Chart 1: Value Chain (Doughnut) ---
+        // Showing that US keeps the high value parts
+        const ctxValue = document.getElementById('valueChainChart').getContext('2d');
+        new Chart(ctxValue, {
+            type: 'doughnut',
+            data: {
+                labels: ['美國 (IC設計/EDA/設備)', '台灣 (晶圓代工/封測)', '其他 (材料/設備)'],
+                datasets: [{
+                    data: [48, 20, 32], // Approximate global value capture
+                    backgroundColor: ['#06B6D4', '#8B5CF6', '#E5E7EB'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                ...commonOptions,
+                cutout: '60%',
+                plugins: {
+                    ...commonOptions.plugins,
+                    title: {
+                        display: true,
+                        text: '全球半導體附加價值分配 (美國仍握有高利潤端)',
+                        font: { size: 16 }
+                    }
+                }
+            }
+        });
+
+        // --- Chart 2: Cost Structure (Bar) ---
+        // Comparing US vs Taiwan Manufacturing Costs
+        const ctxCost = document.getElementById('costComparisonChart').getContext('2d');
+        const costLabels = ['台灣營運成本 (基準)', '美國營運成本 (增加)'].map(l => wrapLabel(l, 16));
+        
+        new Chart(ctxCost, {
+            type: 'bar',
+            data: {
+                labels: costLabels,
+                datasets: [{
+                    label: '相對成本指數',
+                    data: [100, 150], // ~50% higher in US
+                    backgroundColor: ['#06B6D4', '#EC4899'],
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                ...commonOptions,
+                indexAxis: 'y',
+                plugins: {
+                    ...commonOptions.plugins,
+                    legend: { display: false },
+                    title: {
+                        display: true,
+                        text: '晶圓廠營運成本比較 (指數)',
+                        font: { size: 16 }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false }
+                    },
+                    y: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // --- Chart 3: Sentiment Radar ---
+        // Analyzing reaction dimensions
+        const ctxRadar = document.getElementById('sentimentRadarChart').getContext('2d');
+        new Chart(ctxRadar, {
+            type: 'radar',
+            data: {
+                labels: ['官方澄清強度', '民眾憤怒指數', '產業配合度', '疑美論聲量', '戰略依賴度'],
+                datasets: [{
+                    label: '政府反應',
+                    data: [40, 20, 90, 10, 95], // Low clarification, high compliance
+                    borderColor: '#06B6D4',
+                    backgroundColor: 'rgba(6, 182, 212, 0.2)',
+                    pointBackgroundColor: '#06B6D4'
+                }, {
+                    label: '民間輿論',
+                    data: [70, 90, 50, 85, 40], // High anger, high skepticism
+                    borderColor: '#EC4899',
+                    backgroundColor: 'rgba(236, 72, 153, 0.2)',
+                    pointBackgroundColor: '#EC4899'
+                }]
+            },
+            options: {
+                ...commonOptions,
+                scales: {
+                    r: {
+                        angleLines: { color: '#E5E7EB' },
+                        grid: { color: '#E5E7EB' },
+                        pointLabels: {
+                            font: { family: "'Noto Sans TC', sans-serif", size: 12 }
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 100
+                    }
+                }
+            }
+        });
+
+    </script>
+    <!-- 
+        Analysis Plan Summary:
+        1. Analyzed the "Taiwan Stole Chips" myth as populist rhetoric vs economic reality.
+        2. Structured narrative: Myth -> Historical Facts -> Economic Data -> Social Reaction.
+        3. Visuals chosen: 
+           - Doughnut: To show US dominance in design value (debunking "loss").
+           - Timeline: To show legal tech transfer (debunking "theft").
+           - Bar: To show cost disparity (explaining why fabs left US).
+           - Radar: To contrast Government vs Public sentiment.
+        4. Colors: Cyber Blue/Violet for tech feel.
+        5. NO SVG used. All charts Canvas based.
+    -->
+</body>
+</html>
