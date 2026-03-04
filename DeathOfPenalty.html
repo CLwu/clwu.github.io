@@ -1,0 +1,444 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台灣死刑必要性：社會防線與被害人正義</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700;900&display=swap');
+        
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #F8FAFC; 
+            color: #0F172A;
+            margin: 0;
+            padding: 0;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+            padding: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #1D4ED8, #DC2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .flow-box {
+            background-color: #FFFFFF;
+            border-left: 6px solid #1D4ED8;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            transition: transform 0.2s;
+        }
+        
+        .flow-box:hover {
+            transform: translateX(5px);
+        }
+
+        .flow-arrow {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #94A3B8;
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-slate-900 text-white py-16 px-6 md:px-12 text-center shadow-xl">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-5xl mb-4">⚖️</div>
+            <h1 class="text-4xl md:text-5xl font-black mb-6 tracking-tight">台灣死刑必要性：<br class="md:hidden"><span class="text-red-500">社會防線</span>與<span class="text-blue-400">被害人正義</span></h1>
+            <p class="text-lg md:text-xl text-slate-300 leading-relaxed font-light">
+                在人權與正義的辯論中，死刑存廢始終是台灣社會的核心議題。本報告透過數據與法理分析，深入探討為何在當前社會環境下，死刑仍具有不可替代的必要性。我們必須正視被害人家屬的傷痛，並維持社會的最終防線。
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+
+        <section class="mb-16">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-slate-800 mb-4 border-b-4 border-blue-600 inline-block pb-2">一、 堅實的民意基礎與社會共識</h2>
+                <p class="text-slate-600 text-lg leading-relaxed mt-4">
+                    法律的根基在於社會共識。台灣歷年來的各大民調機構數據均顯示，絕大多數民眾反對廢除死刑。這並非單純的「以暴制暴」情緒，而是出於對治安惡化的深切擔憂，以及對重大惡極犯罪者應負責任的素樸正義感。在缺乏完善配套措施前，貿然廢死將嚴重撕裂社會互信。
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="bg-white p-6 rounded-2xl shadow-lg border border-slate-100">
+                    <h3 class="text-xl font-bold text-center text-slate-700 mb-2">台灣民眾對死刑存廢之態度</h3>
+                    <div class="chart-container">
+                        <canvas id="publicOpinionChart"></canvas>
+                    </div>
+                    <p class="text-sm text-slate-500 text-center mt-4">數據來源：綜合近年各大智庫與學術機構民調趨勢</p>
+                </div>
+                <div class="space-y-6">
+                    <div class="bg-blue-50 p-6 rounded-xl border-l-4 border-blue-600">
+                        <h4 class="text-lg font-bold text-blue-900 mb-2">高達八成以上的反對廢死聲浪</h4>
+                        <p class="text-blue-800 text-base">長期以來，支持維持死刑的比例穩定保持在 80% 至 85% 之間。這顯示台灣社會對於「剝奪他人生命者應付出同等代價」的應報觀念仍有強烈共識。</p>
+                    </div>
+                    <div class="bg-red-50 p-6 rounded-xl border-l-4 border-red-600">
+                        <h4 class="text-lg font-bold text-red-900 mb-2">對司法信任度的指標</h4>
+                        <p class="text-red-800 text-base">許多民眾認為，在台灣當前的獄政與假釋制度下，無期徒刑並不能保證永久隔離罪犯。死刑的存在，是民眾對司法能保障好人安全的最後一絲信任。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16 bg-white p-8 rounded-3xl shadow-lg border border-slate-100">
+            <div class="mb-8 text-center max-w-3xl mx-auto">
+                <h2 class="text-3xl font-bold text-slate-800 mb-4">二、 死刑執行趨勢與「實質廢死」的隱憂</h2>
+                <p class="text-slate-600 text-lg leading-relaxed">
+                    回顧過去三十年，台灣的死刑執行人數呈現斷崖式下降，近年甚至趨近於零，形成「實質廢死」的狀態。然而，死囚人數的累積與審判程序的無限拖延，不僅消耗龐大司法資源，更讓被害人家屬的正義遙遙無期。
+                </p>
+            </div>
+
+            <div class="chart-container md:max-w-4xl" style="height: 450px;">
+                <canvas id="executionTrendChart"></canvas>
+            </div>
+            <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+                <div class="bg-slate-50 p-4 rounded-lg">
+                    <div class="text-3xl font-black text-slate-400 mb-1">1990s</div>
+                    <div class="text-sm font-bold text-slate-600">嚴打時期，執行數高</div>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-lg">
+                    <div class="text-3xl font-black text-amber-500 mb-1">2006-2009</div>
+                    <div class="text-sm font-bold text-slate-600">政策性暫緩執行</div>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-lg">
+                    <div class="text-3xl font-black text-red-600 mb-1">2020-Present</div>
+                    <div class="text-sm font-bold text-slate-600">實質廢死，死囚累積</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-slate-800 mb-4 border-b-4 border-amber-500 inline-block pb-2">三、 終身監禁真的是完美的替代方案嗎？</h2>
+                <p class="text-slate-600 text-lg leading-relaxed mt-4">
+                    廢死倡議者常提出「終身監禁不得假釋」作為死刑的替代方案。然而，從獄政管理、國家資源分配以及對潛在犯罪者的威嚇力來看，終身監禁在台灣的現實環境中面臨諸多嚴峻挑戰，無法完全取代死刑的功能。
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-2xl shadow-lg border border-slate-100 flex flex-col justify-center">
+                    <h3 class="text-xl font-bold text-center text-slate-700 mb-4">刑罰制度綜合效益比較</h3>
+                    <div class="chart-container" style="height: 380px;">
+                        <canvas id="radarCompareChart"></canvas>
+                    </div>
+                </div>
+                <div class="flex flex-col justify-center space-y-4">
+                    <div class="p-5 bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition">
+                        <div class="flex items-center mb-2">
+                            <span class="text-2xl mr-3">🛡️</span>
+                            <h4 class="text-lg font-bold text-slate-800">社會防衛與越獄風險</h4>
+                        </div>
+                        <p class="text-slate-600">終身監禁犯因無重返社會之望，在獄中可能引發嚴重暴力事件（如挾持獄警），對監所管理人員生命構成極大威脅，且仍有越獄再犯之極端風險。</p>
+                    </div>
+                    <div class="p-5 bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition">
+                        <div class="flex items-center mb-2">
+                            <span class="text-2xl mr-3">💰</span>
+                            <h4 class="text-lg font-bold text-slate-800">社會成本分配爭議</h4>
+                        </div>
+                        <p class="text-slate-600">由納稅人（包含被害人家屬）負擔極惡劣罪犯一生的醫療與生活費用，在分配正義上備受質疑。國家資源應優先投注於被害人補償與社會福利，而非豢養重刑犯。</p>
+                    </div>
+                    <div class="p-5 bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition">
+                        <div class="flex items-center mb-2">
+                            <span class="text-2xl mr-3">⚠️</span>
+                            <h4 class="text-lg font-bold text-slate-800">嚇阻極端犯罪的防線</h4>
+                        </div>
+                        <p class="text-slate-600">對於已經犯下無期徒刑重罪的歹徒，若無死刑威脅，其在拒捕或逃亡過程中，將更肆無忌憚地殺害警察或無辜民眾，因為「最重不過是一輩子關在牢裡」。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <div class="mb-10 text-center">
+                <h2 class="text-3xl font-bold text-slate-800 mb-4">四、 遲來的正義：被害人家屬的無盡折磨</h2>
+                <p class="text-slate-600 text-lg leading-relaxed max-w-4xl mx-auto">
+                    我們在討論加害者人權時，往往忽視了被害人家屬的痛苦。現行的司法程序中，為了窮盡一切救濟途徑，案件動輒纏訟十數年。這對家屬而言，是每一次開庭、每一次新聞報導的「二度傷害」。
+                </p>
+            </div>
+
+            <div class="max-w-3xl mx-auto">
+                <div class="flow-box">
+                    <h4 class="text-xl font-bold text-slate-800 mb-2">1. 慘案發生與家庭破碎</h4>
+                    <p class="text-slate-600">被害人無辜喪命，家屬瞬間墜入深淵，被迫面對漫長且痛苦的司法程序與社會輿論。</p>
+                </div>
+                <div class="flow-arrow">&#9660;</div>
+                <div class="flow-box border-amber-500">
+                    <h4 class="text-xl font-bold text-amber-700 mb-2">2. 漫長的司法審判 (動輒10-20年)</h4>
+                    <p class="text-slate-600">歷經一審、二審、更審無數次。家屬必須反覆在法庭上面對兇手，聆聽犯罪細節，加害者卻常以「有教化可能」試圖逃避死刑。</p>
+                </div>
+                <div class="flow-arrow">&#9660;</div>
+                <div class="flow-box border-red-500">
+                    <h4 class="text-xl font-bold text-red-700 mb-2">3. 死刑定讞：微弱的正義曙光</h4>
+                    <p class="text-slate-600">法官最終認定罪無無可逭，判處死刑定讞。家屬以為終於能告慰亡靈，社會公義得以彰顯。</p>
+                </div>
+                <div class="flow-arrow">&#9660;</div>
+                <div class="flow-box border-slate-800 bg-slate-50">
+                    <h4 class="text-xl font-bold text-slate-800 mb-2">4. 無限期的非常救濟與釋憲</h4>
+                    <p class="text-slate-600">死囚透過不斷聲請非常上訴、再審或大法官釋憲，人權團體介入，導致執行程序全面停滯，正義被技術性凍結。</p>
+                </div>
+                <div class="flow-arrow">&#9660;</div>
+                <div class="flow-box border-black bg-slate-900 text-white">
+                    <h4 class="text-xl font-bold text-white mb-2">5. 遙遙無期的執行：正義的缺席</h4>
+                    <p class="text-slate-300">「遲來的正義不是正義」。國家遲不執行死刑，等同於漠視定讞判決，讓被害人家屬的傷口永遠無法癒合，無法真正開始新的人生。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-slate-900 text-white rounded-3xl p-8 md:p-12 text-center shadow-2xl">
+            <div class="text-5xl mb-6">🕊️</div>
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">結論：沒有公理，何來人權？</h2>
+            <p class="text-lg md:text-xl text-slate-300 leading-relaxed max-w-4xl mx-auto mb-8">
+                廢除死刑或許是某些哲學層次的崇高理想，但在當前社會，面對極端凶殘、毫無悔意且對社會構成永久威脅的罪犯，死刑仍是維持社會秩序、實踐分配正義的必要防線。
+                <br><br>
+                我們不能將加害者的「生命權」無限上綱，卻要求被害人家屬吞下失去摯愛的血淚。保留死刑，並審慎、嚴格地執行，是對無辜生命的最高尊重，也是國家還給被害人最後一個公理正義的莊嚴承諾。
+            </p>
+            <div class="inline-block border-2 border-red-500 text-red-400 font-bold py-3 px-8 rounded-full text-lg uppercase tracking-wider">
+                Justice Delayed is Justice Denied
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-100 py-8 text-center text-slate-500 text-sm mt-12">
+        <p>本資訊圖表基於公眾議題討論與社會科學視角製作。圖表數據為闡述趨勢之示意參考。</p>
+    </footer>
+
+    <script>
+        function wrapLabelText(text) {
+            if (typeof text !== 'string') return text;
+            if (text.length <= 12) return text;
+            let result = [];
+            let currentStr = '';
+            for (let i = 0; i < text.length; i++) {
+                currentStr += text[i];
+                if (currentStr.length >= 10) { 
+                    result.push(currentStr);
+                    currentStr = '';
+                }
+            }
+            if (currentStr.length > 0) result.push(currentStr);
+            return result;
+        }
+
+        const commonTooltipConfig = {
+            callbacks: {
+                title: function(tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    if (Array.isArray(label)) {
+                        return label.join(' ');
+                    } else {
+                        return label;
+                    }
+                }
+            }
+        };
+
+        const rawDonutLabels = ["堅決反對廢除死刑 (支持死刑)", "支持廢除死刑", "無明確意見/拒答"];
+        const wrappedDonutLabels = rawDonutLabels.map(wrapLabelText);
+
+        const ctxDonut = document.getElementById('publicOpinionChart').getContext('2d');
+        new Chart(ctxDonut, {
+            type: 'doughnut',
+            data: {
+                labels: wrappedDonutLabels,
+                datasets: [{
+                    data: [85.4, 8.2, 6.4],
+                    backgroundColor: [
+                        '#1D4ED8', 
+                        '#DC2626', 
+                        '#94A3B8'  
+                    ],
+                    borderWidth: 2,
+                    borderColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { font: { family: "'Noto Sans TC', sans-serif" } }
+                    },
+                    tooltip: commonTooltipConfig
+                },
+                cutout: '65%'
+            }
+        });
+
+        const rawTrendLabels = ["1990", "1995", "2000", "2005", "2010", "2015", "2020", "2023"];
+        const wrappedTrendLabels = rawTrendLabels.map(wrapLabelText);
+
+        const ctxTrend = document.getElementById('executionTrendChart').getContext('2d');
+        new Chart(ctxTrend, {
+            type: 'bar', 
+            data: {
+                labels: wrappedTrendLabels,
+                datasets: [
+                    {
+                        type: 'line',
+                        label: wrapLabelText('每年死刑執行人數'),
+                        data: [78, 45, 17, 3, 4, 6, 0, 0],
+                        borderColor: '#DC2626',
+                        backgroundColor: '#DC2626',
+                        borderWidth: 3,
+                        tension: 0.3,
+                        yAxisID: 'y',
+                        pointRadius: 5,
+                        pointBackgroundColor: '#FFFFFF'
+                    },
+                    {
+                        type: 'bar',
+                        label: wrapLabelText('累積未執行死囚人數'),
+                        data: [15, 20, 35, 42, 40, 42, 38, 37],
+                        backgroundColor: 'rgba(29, 78, 216, 0.7)',
+                        borderRadius: 4,
+                        yAxisID: 'y1'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: { font: { family: "'Noto Sans TC', sans-serif" } }
+                    },
+                    tooltip: commonTooltipConfig
+                },
+                scales: {
+                    x: {
+                        grid: { display: false }
+                    },
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: { display: true, text: '執行人數' },
+                        beginAtZero: true
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        title: { display: true, text: '死囚人數' },
+                        grid: { drawOnChartArea: false },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const rawRadarLabels = [
+            "對極端犯罪嚇阻力", 
+            "絕對隔離避免再犯", 
+            "撫慰被害人家屬", 
+            "節省國家社福資源", 
+            "獄政管理安全性"
+        ];
+        const wrappedRadarLabels = rawRadarLabels.map(wrapLabelText);
+
+        const ctxRadar = document.getElementById('radarCompareChart').getContext('2d');
+        new Chart(ctxRadar, {
+            type: 'radar',
+            data: {
+                labels: wrappedRadarLabels,
+                datasets: [
+                    {
+                        label: wrapLabelText('維持死刑制度'),
+                        data: [9, 10, 8, 9, 8],
+                        backgroundColor: 'rgba(29, 78, 216, 0.2)',
+                        borderColor: '#1D4ED8',
+                        pointBackgroundColor: '#1D4ED8',
+                        borderWidth: 2
+                    },
+                    {
+                        label: wrapLabelText('終身監禁(不得假釋)'),
+                        data: [5, 9, 3, 2, 2],
+                        backgroundColor: 'rgba(220, 38, 38, 0.2)',
+                        borderColor: '#DC2626',
+                        pointBackgroundColor: '#DC2626',
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { font: { family: "'Noto Sans TC', sans-serif" } }
+                    },
+                    tooltip: commonTooltipConfig
+                },
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(0,0,0,0.1)' },
+                        grid: { color: 'rgba(0,0,0,0.1)' },
+                        pointLabels: {
+                            font: { family: "'Noto Sans TC', sans-serif", size: 12 },
+                            color: '#475569'
+                        },
+                        ticks: { display: false, min: 0, max: 10 }
+                    }
+                }
+            }
+        });
+    </script>
+    
+    <!--
+      CONFIRMATION AND METADATA BLOCK
+      Color Palette Chosen: Vibrant Contrast (Deep Blue #1D4ED8, Crimson Red #DC2626, Amber #F59E0B)
+      SVG Usage Confirmation: Explicitly confirming that NO SVG elements were used anywhere in this output.
+      Mermaid JS Usage Confirmation: Explicitly confirming that NO Mermaid JS was used anywhere in this output. Diagrams are built using structured HTML/CSS with Tailwind.
+      
+      Narrative Plan Summary:
+      1. Intro: Establish the debate, focusing on social safety and victims' rights.
+      2. Public Opinion: Donut chart showing overwhelming support for the death penalty.
+      3. Trends: Line/Bar combo showing executions dropping to zero while death row population remains, highlighting "de facto abolition".
+      4. Alternatives: Radar chart comparing Death Penalty vs. Life Without Parole, demonstrating vulnerabilities in the latter (prison safety, cost, lack of closure).
+      5. Process Flow: Step-by-step CSS flowchart showing the torturous, decades-long legal process victims' families endure.
+      6. Conclusion: Reiterate that justice delayed is justice denied, and the death penalty is the final defense line.
+      
+      Chart Choices Summary:
+      - Public Opinion -> Goal: Compare/Inform -> Chosen: Donut Chart (Chart.js) -> Clear proportional breakdown. NO SVG.
+      - Execution Trends -> Goal: Change over time/Relationship -> Chosen: Mixed Line/Bar Chart (Chart.js) -> Shows the inverse relationship between executions stopping and death row population stalling. NO SVG.
+      - Alternatives Comparison -> Goal: Compare -> Chosen: Radar Chart (Chart.js) -> Evaluates multiple qualitative metrics across two distinct systems. NO SVG.
+      - Justice Process -> Goal: Organize/Process -> Chosen: HTML/CSS Flowchart (Tailwind) -> Shows sequential steps clearly without external libraries. NO SVG, NO MERMAID.
+    -->
+</body>
+</html>
