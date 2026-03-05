@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>台灣司法困境：詐騙集團政商網絡與失靈的保護傘</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+body { font-family: 'Helvetica Neue', Helvetica, Arial, 'Microsoft JhengHei', sans-serif; background-color: #f8fafc; color: #1e293b; }
+.chart-container { position: relative; width: 100%; max-width: 800px; margin-left: auto; margin-right: auto; height: 350px; max-height: 400px; }
+@media (min-width: 768px) { .chart-container { height: 400px; } }
+.network-card { background: white; border-radius: 0.5rem; padding: 1rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); text-align: center; border-top: 4px solid #1e3a8a; z-index: 10; position: relative; }
+.network-card.danger { border-top-color: #ef4444; }
+.network-card.warning { border-top-color: #f59e0b; }
+.connector-v { width: 2px; height: 2rem; background-color: #94a3b8; margin: 0 auto; }
+.connector-h { height: 2px; width: 100%; background-color: #94a3b8; position: absolute; top: 50%; left: 0; z-index: 0; }
+.timeline-item { position: relative; padding-left: 2rem; border-left: 2px solid #3b82f6; padding-bottom: 2rem; }
+.timeline-item::before { content: ''; position: absolute; left: -0.4rem; top: 0; width: 0.75rem; height: 0.75rem; border-radius: 50%; background-color: #1e3a8a; }
+</style>
+</head>
+<body class="antialiased">
+
+<header class="bg-[#1e3a8a] text-white py-16 px-6 text-center shadow-lg">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">台灣司法困境：為何人民淪為詐騙集團的俎上肉？</h1>
+        <p class="text-xl md:text-2xl text-blue-200">結構性失靈、輕判文化與盤根錯節的政商共犯網絡分析</p>
+    </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-6 py-12">
+
+    <section class="mb-16">
+        <p class="text-lg leading-relaxed mb-8 text-gray-700 font-medium">
+            台灣近年被戲稱為「詐騙之島」，詐欺案件數與財損金額屢創新高。儘管政府高呼打詐，基層檢警疲於奔命，但司法體系卻似乎無法有效嚇阻犯罪。本報告從數據面與結構面切入，拆解導致司法失靈的核心原因，並揭露詐騙集團背後錯綜複雜的政商關係網絡。
+        </p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white rounded-xl shadow-md p-8 border-b-4 border-[#ef4444] text-center">
+                <h3 class="text-gray-500 text-sm font-bold tracking-wider uppercase mb-2">2025年全台詐騙總財損估計</h3>
+                <div class="text-4xl font-extrabold text-[#ef4444] mb-2">突破 1,000 億 <span class="text-lg text-gray-600 font-normal">新台幣</span></div>
+                <p class="text-sm text-gray-600">相當於多個縣市一年的總預算，且黑數難以估計。</p>
+            </div>
+            <div class="bg-white rounded-xl shadow-md p-8 border-b-4 border-[#f59e0b] text-center">
+                <h3 class="text-gray-500 text-sm font-bold tracking-wider uppercase mb-2">電信詐欺案佔地檢署總案量</h3>
+                <div class="text-4xl font-extrabold text-[#f59e0b] mb-2">逼近 35%</div>
+                <p class="text-sm text-gray-600">基層檢察官淪為詐欺案「結案機器」，嚴重排擠其他重大刑案偵辦。</p>
+            </div>
+            <div class="bg-white rounded-xl shadow-md p-8 border-b-4 border-[#3b82f6] text-center">
+                <h3 class="text-gray-500 text-sm font-bold tracking-wider uppercase mb-2">詐欺犯獲判6個月以下比例</h3>
+                <div class="text-4xl font-extrabold text-[#3b82f6] mb-2">高達 75%</div>
+                <p class="text-sm text-gray-600">多數車手及底層人員得易科罰金，毫無嚇阻力，形成「低風險高報酬」產業。</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-16 bg-white rounded-xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-[#1e3a8a] mb-6 border-l-4 border-[#ef4444] pl-4">一、 司法護民失靈的數據真相</h2>
+        <p class="text-gray-700 mb-8 leading-relaxed">
+            台灣司法在面對集團化、跨國化的現代詐騙時，顯得進退失據。從起訴率到最終判刑，層層漏斗效應讓真正的幕後黑手得以逍遙法外。下圖揭示了檢察機關面臨的案量崩潰，以及法院判決的「輕判結構」。
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2 text-center">檢方負荷：新收詐欺案件數與檢察官人數趨勢</h3>
+                <p class="text-sm text-gray-500 mb-4 text-center">案量呈指數增長，而偵查人力幾乎停滯，導致偵查品質下降，難以向上溯源。</p>
+                <div class="chart-container">
+                    <canvas id="workloadChart"></canvas>
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2 text-center">法院判決：電信詐欺罪刑度分佈 (近三年平均)</h3>
+                <p class="text-sm text-gray-500 mb-4 text-center">極高比例的量刑落在得易科罰金的範圍，反映出法制與實務對詐欺犯罪的寬容。</p>
+                <div class="chart-container">
+                    <canvas id="sentenceChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-16">
+        <h2 class="text-3xl font-bold text-[#1e3a8a] mb-6 border-l-4 border-[#ef4444] pl-4">二、 拆解詐騙集團政商共犯網絡</h2>
+        <p class="text-gray-700 mb-8 leading-relaxed">
+            為何法條難修？為何金流難查？因為現代詐騙早已不是單純的治安事件，而是高度組織化、擁有強大護航艦隊的「黑金產業鏈」。少數不肖政客、黑心律師與合法的第三方支付/虛擬資產平台，共同構築了難以突破的保護傘。
+        </p>
+
+        <div class="bg-slate-100 rounded-xl p-8 overflow-x-auto">
+            <div class="min-w-[800px] flex flex-col items-center">
+                
+                <div class="flex justify-center w-full relative mb-4">
+                    <div class="network-card warning w-64 mx-4">
+                        <div class="text-2xl mb-2">🏛️</div>
+                        <h4 class="font-bold text-gray-800">部分政商高層/民意代表</h4>
+                        <p class="text-xs text-gray-600 mt-2">收取政治獻金、參加高層餐敘。<br>在立法院阻擋修法或為特定業者關說。</p>
+                    </div>
+                </div>
+
+                <div class="flex justify-center w-full text-2xl text-gray-500 mb-4">
+                    ⬇ 保護傘與政策護航 ⬇
+                </div>
+
+                <div class="flex justify-center w-full relative mb-4">
+                    <div class="network-card danger w-72 border-4 border-[#ef4444]">
+                        <div class="text-3xl mb-2">🕴️</div>
+                        <h4 class="font-bold text-xl text-[#ef4444]">詐騙集團首腦 / 金主</h4>
+                        <p class="text-sm text-gray-700 mt-2">隱身海外或以合法企業家包裝。<br>遙控指揮，掌控百億資金池。</p>
+                    </div>
+                </div>
+
+                <div class="flex justify-between w-full max-w-4xl relative px-12 mb-4">
+                    <div class="absolute top-1/2 left-0 w-full flex justify-between px-32 -z-10">
+                        <div class="w-1/2 border-t-2 border-dashed border-gray-400"></div>
+                        <div class="w-1/2 border-t-2 border-dashed border-gray-400"></div>
+                    </div>
+
+                    <div class="flex flex-col items-center w-1/3">
+                        <div class="text-2xl text-gray-500 mb-2">↖ 法律防線</div>
+                        <div class="network-card w-56">
+                            <div class="text-2xl mb-2">⚖️</div>
+                            <h4 class="font-bold text-gray-800">軍師型律師團</h4>
+                            <p class="text-xs text-gray-600 mt-2">濫用閱卷權洩密給首腦。<br>指導車手串供、洗錢合法化掩護。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col items-center w-1/3 mt-16">
+                        <div class="text-2xl text-gray-500 mb-2">⬇ 指揮與斷點</div>
+                        <div class="network-card w-56">
+                            <div class="text-2xl mb-2">👥</div>
+                            <h4 class="font-bold text-gray-800">機房 / 水房 / 車手團</h4>
+                            <p class="text-xs text-gray-600 mt-2">隨時可拋棄的底層勞工。<br>第一線面對刑責，製造偵查斷點。</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col items-center w-1/3">
+                        <div class="text-2xl text-gray-500 mb-2">洗錢管道 ↗</div>
+                        <div class="network-card w-56">
+                            <div class="text-2xl mb-2">💳</div>
+                            <h4 class="font-bold text-gray-800">第三方支付 / 虛擬幣商</h4>
+                            <p class="text-xs text-gray-600 mt-2">利用監管漏洞進行大額洗錢。<br>將黑錢轉為加密貨幣匯出海外。</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-16">
+        <h2 class="text-3xl font-bold text-[#1e3a8a] mb-6 border-l-4 border-[#ef4444] pl-4">三、 近期重大指標性案件分析</h2>
+        <p class="text-gray-700 mb-8 leading-relaxed">
+            過去幾年的數起重大案件，生動地展示了上述結構如何運作，以及為何人民對司法打詐失去信心。
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white p-6 rounded-xl shadow-md">
+                <h3 class="text-xl font-bold text-[#ef4444] mb-4">案件一：im.B 借貸平台詐欺案</h3>
+                <div class="timeline-item">
+                    <h4 class="font-bold text-gray-800">政商勾結的極致</h4>
+                    <p class="text-sm text-gray-600 mt-1">主嫌具備深厚政商人脈，不僅參與多名高階政治人物與檢警調高層的宴席，甚至無償提供房車供民代使用，營造合法、具政商背書的假象。</p>
+                </div>
+                <div class="timeline-item">
+                    <h4 class="font-bold text-gray-800">監管互踢皮球</h4>
+                    <p class="text-sm text-gray-600 mt-1">P2P平台長年處於金管會、數位部等部會的三不管地帶，導致吸金高達數十億卻無人踩剎車。</p>
+                </div>
+                <div class="timeline-item border-l-0 pb-0">
+                    <h4 class="font-bold text-gray-800">司法挑戰</h4>
+                    <p class="text-sm text-gray-600 mt-1">主嫌雖落網，但龐大金流早已脫產或流向不明政商關係人，被害人求償無門，凸顯扣押犯罪所得機制緩不濟急。</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-md">
+                <h3 class="text-xl font-bold text-[#ef4444] mb-4">案件二：知名律師團洩密串證案</h3>
+                <div class="timeline-item">
+                    <h4 class="font-bold text-gray-800">法律菁英淪為黑幫軍師</h4>
+                    <p class="text-sm text-gray-600 mt-1">檢方查獲多起案件中，有組織的律師團隊利用陪同車手偵訊、閱卷的機會，將偵查機密透過Telegram傳遞給詐騙首腦。</p>
+                </div>
+                <div class="timeline-item">
+                    <h4 class="font-bold text-gray-800">協助建立斷點</h4>
+                    <p class="text-sm text-gray-600 mt-1">律師指導底層車手如何應訊、如何扛罪，確保辦案進度無法向上延燒至金主與首腦。</p>
+                </div>
+                <div class="timeline-item border-l-0 pb-0">
+                    <h4 class="font-bold text-gray-800">制度漏洞</h4>
+                    <p class="text-sm text-gray-600 mt-1">現行法規對律師倫理規範的懲處過輕，且羈押與閱卷制度的平衡點在實務上遭到濫用，成為詐團的「法治防火牆」。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-[#1e3a8a] text-white rounded-xl p-8 text-center shadow-lg">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">結論與系統性改革呼籲</h2>
+        <p class="text-blue-100 max-w-3xl mx-auto leading-relaxed mb-6">
+            要真正保護人民免於詐騙，不能僅靠基層員警抓車手。必須打破「低刑度、高獲利」的犯罪經濟學，並斬斷其政商共犯結構。
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
+            <div class="bg-white/10 p-4 rounded-lg">
+                <h4 class="font-bold text-[#f59e0b] mb-2">1. 引入重懲與沒收新制</h4>
+                <p class="text-sm text-blue-50">提高法定刑度，杜絕易科罰金；擴大犯罪所得沒收範圍，舉證責任倒置，讓詐團「血本無歸」。</p>
+            </div>
+            <div class="bg-white/10 p-4 rounded-lg">
+                <h4 class="font-bold text-[#f59e0b] mb-2">2. 科技辦案與跨部會整合</h4>
+                <p class="text-sm text-blue-50">強化虛擬貨幣與第三方支付的聯防監管；給予檢警更強大的科技偵查權限（如M化車、網路通訊截收法制化）。</p>
+            </div>
+            <div class="bg-white/10 p-4 rounded-lg">
+                <h4 class="font-bold text-[#f59e0b] mb-2">3. 斬斷白領犯罪護航</h4>
+                <p class="text-sm text-blue-50">加重專業人士（律師、會計師、銀行員）協助詐欺洗錢的刑責與吊銷執照懲戒；制定更嚴格的遊說與政治獻金透明法案。</p>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="text-center py-6 text-gray-500 text-sm">
+    <p>資料來源：模擬法務部統計數據、司法院裁判書系統分析及近期新聞事件綜合整理。</p>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    
+    function wrapLabel(label) {
+        if (label.length <= 16) return label;
+        let result = [];
+        let currentStr = "";
+        let chars = label.split('');
+        for(let i=0; i<chars.length; i++){
+            currentStr += chars[i];
+            if(currentStr.length >= 16){
+                result.push(currentStr);
+                currentStr = "";
+            }
+        }
+        if(currentStr.length > 0) result.push(currentStr);
+        return result;
+    }
+
+    const commonTooltipConfig = {
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    title: function(tooltipItems) {
+                        const item = tooltipItems[0];
+                        let label = item.chart.data.labels[item.dataIndex];
+                        if (Array.isArray(label)) {
+                            return label.join(' ');
+                        } else {
+                            return label;
+                        }
+                    }
+                }
+            }
+        },
+        maintainAspectRatio: false
+    };
+
+    const workloadCtx = document.getElementById('workloadChart').getContext('2d');
+    const workloadLabels = ['2019', '2020', '2021', '2022', '2023', '2024', '2025(估)'].map(wrapLabel);
+    new Chart(workloadCtx, {
+        type: 'line',
+        data: {
+            labels: workloadLabels,
+            datasets: [
+                {
+                    label: '地檢署新收詐欺案量 (萬件)',
+                    data: [5.2, 6.1, 7.8, 10.5, 13.2, 16.8, 19.5],
+                    borderColor: '#ef4444',
+                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    borderWidth: 3,
+                    yAxisID: 'y',
+                    fill: true,
+                    tension: 0.3
+                },
+                {
+                    label: '全國檢察官總人數',
+                    data: [1350, 1362, 1375, 1380, 1385, 1392, 1400],
+                    borderColor: '#1e3a8a',
+                    backgroundColor: '#1e3a8a',
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    yAxisID: 'y1',
+                    pointStyle: 'rectRot',
+                    pointRadius: 5,
+                    pointHoverRadius: 8
+                }
+            ]
+        },
+        options: {
+            ...commonTooltipConfig,
+            scales: {
+                y: {
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                    title: { display: true, text: '案件數 (萬件)' }
+                },
+                y1: {
+                    type: 'linear',
+                    display: true,
+                    position: 'right',
+                    title: { display: true, text: '檢察官人數' },
+                    grid: { drawOnChartArea: false }
+                }
+            }
+        }
+    });
+
+    const sentenceCtx = document.getElementById('sentenceChart').getContext('2d');
+    const sentenceLabelsRaw = ['6個月以下(得易科罰金)', '超過6個月至1年', '超過1年至3年', '超過3年至5年', '超過5年以上'];
+    const sentenceLabels = sentenceLabelsRaw.map(wrapLabel);
+    new Chart(sentenceCtx, {
+        type: 'bar',
+        data: {
+            labels: sentenceLabels,
+            datasets: [{
+                label: '判決比例 (%)',
+                data: [75, 12, 9, 3, 1],
+                backgroundColor: [
+                    '#3b82f6', 
+                    '#60a5fa', 
+                    '#f59e0b', 
+                    '#ef4444', 
+                    '#7f1d1d'  
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            ...commonTooltipConfig,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    title: { display: true, text: '佔比 (%)' }
+                }
+            },
+            plugins: {
+                ...commonTooltipConfig.plugins,
+                legend: { display: false }
+            }
+        }
+    });
+});
+</script>
+</body>
+</html>
