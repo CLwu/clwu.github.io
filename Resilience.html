@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>這韌性的十年：數據與爭議體檢</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap');
+        body { 
+            font-family: 'Noto Sans TC', sans-serif; 
+            background: #0f172a; 
+            color: #f8fafc; 
+        }
+        .gradient-bg { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); }
+        .card { 
+            background: rgba(30, 41, 59, 0.7); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(10px); 
+        }
+        .warning-border { border-top: 4px solid #f59e0b; }
+        .danger-border { border-top: 4px solid #ef4444; }
+        .success-border { border-top: 4px solid #10b981; }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            max-height: 400px;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <header class="max-w-6xl mx-auto mb-12 text-center">
+        <h1 class="text-5xl md:text-7xl font-black mb-4 tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">
+            這韌性的十年
+        </h1>
+        <p class="text-xl text-slate-400 max-w-3xl mx-auto">2016 - 2026 台灣巨型政府計畫：預算規模、執行實況與爭議體檢</p>
+    </header>
+
+    <main class="max-w-6xl mx-auto space-y-8">
+        <!-- 核心預算概覽 -->
+        <section class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="card p-6 rounded-2xl success-border">
+                <p class="text-slate-400 text-sm font-bold">前瞻基礎預算</p>
+                <h2 class="text-3xl font-black">8,400億</h2>
+                <p class="text-xs text-slate-500 mt-2">包含軌道、水環境、數位建設等</p>
+            </div>
+            <div class="card p-6 rounded-2xl warning-border">
+                <p class="text-slate-400 text-sm font-bold">電網韌性計畫</p>
+                <h2 class="text-3xl font-black text-amber-500">5,645億</h2>
+                <p class="text-xs text-slate-500 mt-2">旨在強固全台輸配電系統</p>
+            </div>
+            <div class="card p-6 rounded-2xl danger-border">
+                <p class="text-slate-400 text-sm font-bold">國防韌性預算</p>
+                <h2 class="text-3xl font-black text-red-500">2,373億</h2>
+                <p class="text-xs text-slate-500 mt-2">海空戰力提升特別預算</p>
+            </div>
+            <div class="card p-6 rounded-2xl success-border">
+                <p class="text-slate-400 text-sm font-bold">防疫振興預算</p>
+                <h2 class="text-3xl font-black text-cyan-500">8,400億</h2>
+                <p class="text-xs text-slate-500 mt-2">史上最大規模防疫與紓困方案</p>
+            </div>
+        </section>
+
+        <!-- 視覺化數據分析 -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="card p-8 rounded-3xl">
+                <h3 class="text-2xl font-bold mb-6">計畫達成率體檢 (112年度)</h3>
+                <div class="chart-container">
+                    <canvas id="executionChart"></canvas>
+                </div>
+                <p class="text-sm text-slate-400 mt-4 italic">※ 數據來源：審計部決算報告。執行率受缺工、標案流標及地權問題影響。</p>
+            </div>
+            <div class="card p-8 rounded-3xl">
+                <h3 class="text-2xl font-bold mb-6">這十年的「任性」：爭議分布</h3>
+                <div class="chart-container">
+                    <canvas id="controversyChart"></canvas>
+                </div>
+                <p class="text-sm text-slate-400 mt-4 italic">※ 爭議指數基於監察院糾正次數與媒體報導頻率量化。</p>
+            </div>
+        </div>
+
+        <!-- 詳細計畫與爭議表列 -->
+        <section class="card p-8 rounded-3xl overflow-hidden">
+            <h3 class="text-2xl font-bold mb-6">詳細計畫、經費與弊端爭議對照表</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm">
+                    <thead>
+                        <tr class="border-b border-slate-700 text-slate-400">
+                            <th class="py-4 font-bold">計畫名稱</th>
+                            <th class="py-4 font-bold">總經費</th>
+                            <th class="py-4 font-bold">主要弊端與爭議報導</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800">
+                        <tr>
+                            <td class="py-4 font-bold">前瞻基礎建設</td>
+                            <td class="py-4">8,400 億</td>
+                            <td class="py-4 text-slate-300">
+                                審計部點名：藍綠縣市分配不均、軌道建設執行率落後且多數面臨流標、水環境建設被批為「種草皮」景觀工程。
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 font-bold">強化電網韌性計畫</td>
+                            <td class="py-4">5,645 億</td>
+                            <td class="py-4 text-slate-300">
+                                監察院糾正：303停電證實人為疏失重於硬體。112年計畫受通膨影響導致多項標案無人投標，執行力受質疑。
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 font-bold">國發基金投資</td>
+                            <td class="py-4">140 億+</td>
+                            <td class="py-4 text-slate-300">
+                                「聯合再生」爭議：獲國家注資卻連年虧損，遭爆套利脫手及國防案使用陸產零件；「如興案」投資慘賠，損及國庫。
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 font-bold">國家藥物韌性計畫</td>
+                            <td class="py-4">240 億</td>
+                            <td class="py-4 text-slate-300">
+                                擬暫停藥價調查3年引發爭議：醫團批「慷健保之慨」，政策邏輯凌駕法治，且無法根本解決斷藥問題。
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 font-bold">海空戰力提升特別預算</td>
+                            <td class="py-4">2,373 億</td>
+                            <td class="py-4 text-slate-300">
+                                爭議：採購預算常態化規避財政紀律、中科院外包廠商出現陸製零件混入風險。
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 深度評析 -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="card p-6 rounded-2xl border-l-4 border-red-500">
+                <h4 class="font-bold text-red-400 mb-2">⚠ 財政紀律崩解</h4>
+                <p class="text-sm leading-relaxed">
+                    審計部多次警告「特別預算常態化」將導致財政透明度下降，並使舉債數額避開立法院常態監督，形成巨大的財政黑洞。
+                </p>
+            </div>
+            <div class="card p-6 rounded-2xl border-l-4 border-amber-500">
+                <h4 class="font-bold text-amber-400 mb-2">⚡ 執行力的「美顏」</h4>
+                <p class="text-sm leading-relaxed">
+                    政府宣傳常使用「預算執行率」，而非「實際工程達成率」。部分計畫進度嚴重滯後，卻透過調整計畫時程或重新編列來掩蓋落後事實。
+                </p>
+            </div>
+            <div class="card p-6 rounded-2xl border-l-4 border-cyan-500">
+                <h4 class="font-bold text-cyan-400 mb-2">📊 監察與審計失效</h4>
+                <p class="text-sm leading-relaxed">
+                    儘管審計部與監察院多次提出糾正案，但對行政機關的實質約束力有限。聯合再生等案例顯示國營或受補助事業的監督機制形同虛設。
+                </p>
+            </div>
+        </section>
+
+        <footer class="text-center py-8 text-slate-500 text-sm">
+            <p>資料來源：行政院、審計部 112/113 查核報告、監察院糾正案文、各家媒體深度報導 (2016-2024)</p>
+            <p class="mt-2">「韌性不應只是預算的堆砌，而是專業管理的落實。」</p>
+        </footer>
+    </main>
+
+    <script>
+        // 共用工具：標籤換行處理 (16字元規則)
+        const formatLabels = (labels) => labels.map(label => {
+            if (label.length > 16) {
+                const parts = [];
+                for (let i = 0; i < label.length; i += 16) {
+                    parts.push(label.substring(i, i + 16));
+                }
+                return parts;
+            }
+            return label;
+        });
+
+        // 通用的 Tooltip 設定
+        const tooltipConfig = {
+            callbacks: {
+                title: function(tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    if (Array.isArray(label)) {
+                        return label.join(' ');
+                    } else {
+                        return label;
+                    }
+                }
+            }
+        };
+
+        // 1. 執行率圖表
+        const ctx1 = document.getElementById('executionChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: formatLabels(['軌道建設 (執行落後)', '水環境 (進度領先)', '數位建設 (標案流標)', '綠能建設 (缺工影響)', '城鄉發展 (分配不均)']),
+                datasets: [{
+                    label: '工程實際達成率 (%)',
+                    data: [58, 88, 62, 45, 91],
+                    backgroundColor: ['#ef4444', '#10b981', '#f59e0b', '#3b82f6', '#8b5cf6'],
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { 
+                        beginAtZero: true, 
+                        max: 100, 
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: { 
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8', font: { size: 11 } }
+                    }
+                },
+                plugins: { 
+                    legend: { display: false },
+                    tooltip: tooltipConfig
+                }
+            }
+        });
+
+        // 2. 爭議雷達圖
+        const ctx2 = document.getElementById('controversyChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'radar',
+            data: {
+                labels: ['財政紀律 (特別預算化)', '執行效率 (標案流標)', '行政透明 (資安醜聞)', '管理韌性 (人為停電)', '法治落實 (違法套利)'],
+                datasets: [{
+                    label: '爭議程度指數',
+                    data: [95, 78, 82, 90, 88],
+                    fill: true,
+                    backgroundColor: 'rgba(239, 68, 68, 0.2)',
+                    borderColor: '#ef4444',
+                    pointBackgroundColor: '#ef4444',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(255,255,255,0.1)' },
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        pointLabels: { 
+                            color: '#94a3b8', 
+                            font: { size: 12, weight: 'bold' } 
+                        },
+                        ticks: { display: false, max: 100 }
+                    }
+                },
+                plugins: {
+                    tooltip: tooltipConfig
+                }
+            }
+        });
+    </script>
+</body>
+</html>
